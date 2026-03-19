@@ -1,4 +1,0 @@
-/home/nkoper/Рабочий стол/Projects/C++_shit/3logiya/release_build/CMakeFiles/logger.dir
-/home/nkoper/Рабочий стол/Projects/C++_shit/3logiya/release_build/CMakeFiles/3logiya.dir
-/home/nkoper/Рабочий стол/Projects/C++_shit/3logiya/release_build/CMakeFiles/edit_cache.dir
-/home/nkoper/Рабочий стол/Projects/C++_shit/3logiya/release_build/CMakeFiles/rebuild_cache.dir

@@ -1,1 +1,0 @@
-/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/3logiya.dir/example/main.cpp.o -o 3logiya  liblogger.a 
