@@ -1,0 +1,13 @@
+[2026-03-19 19:03:48] [INFO ] message
+[2026-03-19 19:03:48] [ERROR] message
+[2026-03-19 19:03:48] [INFO ] message
+[2026-03-19 19:03:48] [INFO ] message
+[2026-03-19 19:03:48] [INFO ] message
+[2026-03-19 19:03:48] [ERROR] message
+[2026-03-19 19:03:48] [ERROR] message
+[2026-03-19 19:03:48] [ERROR] message
+[2026-03-19 19:03:48] [ERROR] message
+[2026-03-19 19:03:48] [DEBUG] main.cpp:22 main -> message
+[2026-03-19 19:03:48] [DEBUG] main.cpp:23 main -> message
+[2026-03-19 19:03:48] [DEBUG] main.cpp:24 main -> message
+[2026-03-19 19:03:48] [DEBUG] main.cpp:25 main -> message
