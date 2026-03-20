@@ -67,46 +67,6 @@ Logger&& Logger::to_file(const std::string& path) && {
 /////////////////////////////////////////////// 
 
 /**
- * метод для логов уровня INFO
- */
-void Logger::info(const std::string& message) {
-    log(LogEvent(
-        current_timestamp(), 
-        LogLevel::INFO, 
-        message
-    ));
-}
-
-/**
- * метод для логов уровня ERROR
- */
-void Logger::error(const std::string& message) {
-    log(LogEvent(
-        current_timestamp(), 
-        LogLevel::ERROR,
-        message
-    ));
-}
-
-/**
- * метод для логов уровня DEBUG
- */
-void Logger::debug(const std::string& message, 
-                   const char* file,
-                   int line,
-                   const char* function) 
-{
-    log(LogEvent(
-        current_timestamp(),
-        LogLevel::DEBUG,
-        message,
-        file,
-        line,
-        function
-    ));
-}
-
-/**
  * основной метод логгера, которая принимает на вход событие и выводит его в консоль.
  * вывод логера осуществляется в выбранной стратегии
  */

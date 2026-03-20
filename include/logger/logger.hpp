@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <memory>
+#include <format>
 
 #include "log_event.hpp"
 #include "sink/sink.hpp"
@@ -52,12 +53,18 @@ public:
     /**
      * логирование по определенному уровню
      *////////////////////////////////////////////////
-    void info(const std::string& message);
-    void error(const std::string& message);
-    void debug(const std::string& message, 
+    template <typename... Args>
+    void info(std::format_string<Args...> message, Args&&... args);
+
+    template <typename... Args>
+    void error(std::format_string<Args...> message, Args&&... args);
+
+    template <typename... Args>
+    void debug(std::format_string<Args...> message, 
                const char* file,
                int line,
-               const char* function);
+               const char* function,
+               Args&&... args);
     //////////////////////////////////////////////////
 
 private:
@@ -78,15 +85,62 @@ private:
     std::unique_ptr<LogLevel> _filter_level;
 };
 
-#define LOG_INFO(msg) \
-    if (Logger::active()) Logger::active()->info(msg)
+#define LOG_INFO(msg, ...) \
+    if (Logger::active()) Logger::active()->info(msg,  ##__VA_ARGS__)
 
-#define LOG_ERROR(msg) \
-    if (Logger::active()) Logger::active()->error(msg)
+#define LOG_ERROR(msg, ...) \
+    if (Logger::active()) Logger::active()->error(msg,  ##__VA_ARGS__)
 
 #ifdef NDEBUG
     #define LOG_DEBUG(...) 
 #else
-    #define LOG_DEBUG(msg) \
-        if (Logger::active()) Logger::active()->debug(msg, __FILE__, __LINE__, __func__)
+    #define LOG_DEBUG(msg, ...) \
+        if (Logger::active()) Logger::active()->debug(msg, __FILE__, __LINE__, __func__,  ##__VA_ARGS__)
 #endif
+
+/**
+ * метод для логов уровня INFO
+ */
+template <typename... Args>
+void Logger::info(std::format_string<Args...> message, Args&&... args) {
+    std::string msg = std::format(message, std::forward<Args>(args)...);
+    log(LogEvent{
+        current_timestamp(), 
+        LogLevel::INFO, 
+        std::move(msg)
+    });
+}
+
+/**
+ * метод для логов уровня ERROR
+ */
+template <typename... Args>
+void Logger::error(std::format_string<Args...> message, Args&&... args) {
+    std::string msg = std::format(message, std::forward<Args>(args)...);
+    log(LogEvent{
+        current_timestamp(), 
+        LogLevel::ERROR, 
+        std::move(msg)
+    });
+}
+
+/**
+ * метод для логов уровня DEBUG
+ */
+template <typename... Args>
+void Logger::debug(std::format_string<Args...>  message, 
+                   const char* file,
+                   int line,
+                   const char* function,
+                   Args&&... args) 
+{
+    std::string msg = std::format(message, std::forward<Args>(args)...);
+    log(LogEvent(
+        current_timestamp(),
+        LogLevel::DEBUG,
+        msg,
+        file,
+        line,
+        function
+    ));
+}
