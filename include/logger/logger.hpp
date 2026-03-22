@@ -46,9 +46,18 @@ public:
     Logger& to_console() &;
     Logger&& to_console() &&;
 
+    Logger& to_console(std::optional<LogLevel> level) &;
+    Logger&& to_console(std::optional<LogLevel> level) &&;
+
     Logger& to_file(const std::string& path) &;
     Logger&& to_file(const std::string& path) &&;
+
+    Logger& to_file(const std::string& path, std::optional<LogLevel> level) &;
+    Logger&& to_file(const std::string& path, std::optional<LogLevel> level) &&;
     //////////////////////////////////////////////////
+    
+    Logger& clear_sinks() &;
+    Logger&& clear_sinks() &&;
 
     /**
      * логирование по определенному уровню
@@ -79,10 +88,8 @@ private:
     static Logger* _active_logger;
 
     std::vector<std::unique_ptr<Sink>> _sinks;
-    /**
-     *  убрать поинтер
-     */ 
-    std::unique_ptr<LogLevel> _filter_level;
+    std::optional<LogLevel> _filter_level;
+    mutable std::mutex _mutex;
 };
 
 #define LOG_INFO(msg, ...) \
